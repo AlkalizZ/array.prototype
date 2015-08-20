@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+
+<script>
+    Array.prototype.indexOf = function(item, index){
+        var index = index || 0;
+        for(var i = index; i < this.length; i++){
+            if(this[i] === item){
+                return i;
+            }
+        }
+        return -1;
+    };
+    Array.prototype.lastIndexOf = function(item,index){
+        var index = index || this.length;
+        for(var i = index; i >= 0; i--){
+            if(this[i] === item){
+                return i;
+            }
+        }
+        return -1;
+    };
+    Array.prototype.every = function(fn, cont){
+        if(typeof fn === "function"){
+            var passed = true;
+            for(var i = 0; i < this.length; i++){
+                if(passed === false) break;
+                passed = !!fn.call(cont,this[i],i,this);
+            }
+            return passed;
+        }
+    };
+    Array.prototype.some = function(fn, cont){
+        if(typeof fn === "function"){
+            var passed = false;
+            for(var i = 0; i < this.length; i++){
+                if(passed === true) break;
+                passed = !!fn.call(cont, this[i], i, this);
+            }
+            return passed;
+        }
+    };
+    Array.prototype.forEach = function(fn, cont){
+        if(typeof fn === "function"){
+            for(var i = 0; i < this.length; i++){
+                fn.call(cont, this[i], i, this);
+            }
+        }
+    };
+    Array.prototype.map = function(fn, cont){
+        if(typeof fn === "function"){
+            var arr = [];
+            for(var i = 0; i < this.length; i++){
+                arr.push(fn.call(cont, this[i], i, this));
+            }
+            return arr;
+        }
+    };
+    Array.prototype.filter = function(fn, cont){
+        if(typeof fn === "function"){
+            var arr = [];
+            for(var i = 0; i < this.length; i++){
+                var a =fn.call(cont, this[i], i, this);
+                if(a){
+                    arr.push(this[i]);
+                }
+            }
+            return arr;
+        }
+    };
+    Array.prototype.reduce = function(fn, initial){
+        var pre = initial,
+            i = 0,
+            len = this.length;
+        if(typeof initial === "undefined"){
+            pre = this[0];
+            i = 1;
+        }
+        if(typeof fn === "function"){
+            for(i; i < len; i++){
+                pre = fn(pre, this[i], i, this);
+            }
+        }
+        return pre;
+    };
+    Array.prototype.reduceRight = function(fn, initial){
+        var pre = initial,
+            len = this.length,
+            i = len - 1;
+        if(typeof initial === "undefined"){
+            pre = this[len - 1];
+            i--;
+        }
+        if(typeof fn === "function"){
+            for(i; i > -1; i--){
+                pre = fn(pre, this[i], i ,this);
+            }
+        }
+        return pre;
+
+    };
+
+</script>
+</body>
+</html>
